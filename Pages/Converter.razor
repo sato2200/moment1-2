@@ -1,0 +1,77 @@
+@page "/converter"
+
+<PageTitle> Konverterare </PageTitle>
+
+<h1>Konverterare</h1>
+<hr />
+
+<h2>Meter till feet</h2>
+
+<!--Formulär för att hämta in data från användare-->
+<div>
+    <label for="inputMeters">Ange avstånd i meter:</label>
+    <input id="inputMeters" @bind="meters" />
+</div>
+
+<!--Knapp som kallar på funktionen ConvertMeterToFeet-->
+<button class="btn" @onclick="ConvertMetersToFeet">Konvertera till feet</button>
+
+<!--Skriver ut feet-->
+@if (convertedMeters)
+{
+    <p>@meters är @feet feet.</p>
+}
+
+<hr />
+
+<!--Formulär för att hämta in data från användare-->
+<h2>Km/h till miles/h</h2>
+<div>
+    <label for="inputKmPerHour">Ange hastighet i km/h:</label>
+    <input id="inputKmPerHour" @bind="kmPerHour" />
+</div>
+
+<!--Knapp som kallar på funktionen ConvertKmPerHourToMph-->
+<button class="btn" @onclick="ConvertKmPerHourToMph">Konvertera till miles/h</button>
+
+<!--Skriver ut miles/h-->
+@if (convertedKmPerHour)
+{
+    <p>@kmPerHour km/h är @mph miles/h.</p>
+}
+
+
+
+@code {
+    //Variabler för meter till feet
+    private double meters;
+    private double feet;
+    private bool convertedMeters;
+
+
+    //Variabler för km till miles
+    private double kmPerHour;
+    private double mph;
+    private bool convertedKmPerHour;
+
+
+    //Funktion som omvandlar meter till feet
+    private void ConvertMetersToFeet()
+    {
+        feet = Math.Round(meters * 3.28084,2);
+        convertedMeters = true;
+    }
+
+    //Funktion som omvandlar km till miles
+    private void ConvertKmPerHourToMph()
+    {
+        mph = (int)Math.Round(kmPerHour / 1.60934);
+        convertedKmPerHour = true;
+    }
+}
+<hr />
+
+<!--En komponent-->
+<div>
+<HelloComponent />
+</div>

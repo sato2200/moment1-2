@@ -1,0 +1,43 @@
+@page "/DataDisplay"
+
+
+@inject HttpClient httpClient
+
+<h1>Skämt API</h1>
+<p>Här använder jag mig av Jokeapi för att hämta skämt</p>
+
+<!--Knapp som kallar på funktionen GetJoke-->
+<button @onclick="GetJoke">Hämta skämt</button>
+
+<!--Skriver ut det hämtade skämtet-->
+<p>@joke</p>
+
+
+@code {
+    //Variabel där skämtet sparas i för att kunna skrivas ut
+    private string joke = "";
+
+    //Funktion för att hämta skämt
+    private async Task GetJoke()
+    {
+        //Hämtar ett skämt från jokeapi
+        var jokeResponse = await httpClient.GetFromJsonAsync<JokeModel>("https://v2.jokeapi.dev/joke/Programming?type=single");
+
+        //Om jokeResponse inte är null, sparas skämtet i variabeln joke
+        if (jokeResponse != null)
+        {
+            joke = jokeResponse.Joke;
+        }
+        //Om jokeRespons är null, spara "Kunde inte hämta skämtet" i variabeln joke
+        else
+        {
+            joke = "Kunde inte hämta skämtet.";
+        }
+    }
+
+    //Klass för Joke
+    public class JokeModel
+    {
+        public string Joke { get; set; }
+    }
+}
